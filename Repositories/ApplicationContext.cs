@@ -10,7 +10,7 @@ namespace Repositories;
 public class ApplicationContext : DbContext
 {
     public DbSet<Pokemon> Pokemons { get; set; }
-
+    public DbSet<Trainer> Trainers { get; set; }
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         if (!optionsBuilder.IsConfigured)

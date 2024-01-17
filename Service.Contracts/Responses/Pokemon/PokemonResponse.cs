@@ -1,4 +1,4 @@
-﻿namespace Daniel_VU_API.Dto.Pokemon;
+﻿namespace Services.Contracts.Responses.Pokemon;
 
 public class PokemonResponse
 {

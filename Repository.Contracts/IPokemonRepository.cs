@@ -11,7 +11,7 @@ public interface IPokemonRepository
     Task AddAsync(Pokemon pokemon);
     Task<List<Pokemon>> GetAllAsync();
     Task<Pokemon?> GetByIdAsync(int id);
-    Task<Pokemon?> GetByNameAsync(string name);
+    Task<List<Pokemon>> GetByNameAsync(string name);
     Task UpdateAsync(Pokemon pokemon);
     Task<Pokemon?> DeleteAsync(int id);
 }

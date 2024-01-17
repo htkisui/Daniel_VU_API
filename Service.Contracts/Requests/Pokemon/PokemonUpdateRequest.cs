@@ -1,10 +1,12 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Daniel_VU_API.Dto.Pokemon;
+namespace Services.Contracts.Responses.Pokemon;
 
 public class PokemonUpdateRequest
 {
+    [Required]
     public int Id { get; set; }
+    [Required]
     public string Name { get; set; }
 
     [Range(0, 100)]

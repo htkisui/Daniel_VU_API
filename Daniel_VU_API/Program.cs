@@ -1,10 +1,8 @@
-using Daniel_VU_API.Dto.Pokemon;
-using Daniel_VU_API.Mappers;
-using Entities;
 using Repositories;
 using Repository.Contracts;
 using Service.Contracts;
 using Services;
+using Services.Contracts.Mappers;
 
 
 var builder = WebApplication.CreateBuilder(args);

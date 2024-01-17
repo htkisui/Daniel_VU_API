@@ -44,9 +44,9 @@ public class PokemonRepository : IPokemonRepository
         return await _context.Pokemons.FindAsync(id);
     }
 
-    public async Task<Pokemon?> GetByNameAsync(string name)
+    public async Task<List<Pokemon>> GetByNameAsync(string name)
     {
-        return await _context.Pokemons.FirstOrDefaultAsync(p => EF.Functions.Like(p.Name, $"%{name}%"));
+        return await _context.Pokemons.Where(p => EF.Functions.Like(p.Name, $"%{name}%")).ToListAsync();
     }
 
     public async Task UpdateAsync(Pokemon pokemon)

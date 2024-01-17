@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Daniel_VU_API.Dto.Pokemon;
+namespace Services.Contracts.Requests.Pokemon;
 
 public class PokemonAddRequest
 {
