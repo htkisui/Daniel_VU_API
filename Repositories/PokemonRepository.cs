@@ -36,17 +36,17 @@ public class PokemonRepository : IPokemonRepository
 
     public async Task<List<Pokemon>> GetAllAsync()
     {
-        return await _context.Pokemons.ToListAsync();
+        return await _context.Pokemons.Include(p => p.Trainer).ToListAsync();
     }
 
     public async Task<Pokemon?> GetByIdAsync(int id)
     {
-        return await _context.Pokemons.FindAsync(id);
+        return await _context.Pokemons.Include(p => p.Trainer).FirstOrDefaultAsync(p => p.Id == id);
     }
 
     public async Task<List<Pokemon>> GetByNameAsync(string name)
     {
-        return await _context.Pokemons.Where(p => EF.Functions.Like(p.Name, $"%{name}%")).ToListAsync();
+        return await _context.Pokemons.Include(p => p.Trainer).Where(p => EF.Functions.Like(p.Name, $"%{name}%")).ToListAsync();
     }
 
     public async Task UpdateAsync(Pokemon pokemon)

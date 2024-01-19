@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Services.Contracts.Requests.Pokemon;
+namespace Service.Contracts.Requests.Pokemons;
 
 public class PokemonAddRequest
 {
@@ -8,4 +8,5 @@ public class PokemonAddRequest
 
     [Range(1, 100)]
     public int Level { get; set; }
+    public int TrainerId {  get; set; }
 }

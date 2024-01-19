@@ -11,7 +11,7 @@ public interface ITrainerRepository
     Task AddAsync(Trainer trainer);
     Task<List<Trainer>> GetAllAsync();
     Task<Trainer?> GetByIdAsync(int id);
-    Task<Trainer?> GetByNameAsync(string name);
+    Task<List<Trainer>> GetByNameAsync(string name);
     Task UpdateAsync(Trainer trainer);
     Task<Trainer?> DeleteAsync(int id);
 }

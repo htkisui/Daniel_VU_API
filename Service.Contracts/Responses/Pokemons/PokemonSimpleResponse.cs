@@ -4,11 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Entities;
-public class Trainer
+namespace Service.Contracts.Responses.Pokemons;
+public class PokemonSimpleResponse
 {
     public int Id { get; set; }
     public string Name { get; set; }
-
-    public virtual List<Pokemon> Pokemons { get; set; } = new List<Pokemon>();
+    public int Level { get; set; }
 }

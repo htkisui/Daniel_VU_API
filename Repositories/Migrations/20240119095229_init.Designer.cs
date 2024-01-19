@@ -11,7 +11,7 @@ using Repositories;
 namespace Repositories.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20240115153516_init")]
+    [Migration("20240119095229_init")]
     partial class init
     {
         /// <inheritdoc />
@@ -39,9 +39,47 @@ namespace Repositories.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("TrainerId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
+                    b.HasIndex("TrainerId");
+
                     b.ToTable("Pokemons");
+                });
+
+            modelBuilder.Entity("Entities.Trainer", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Trainers");
+                });
+
+            modelBuilder.Entity("Entities.Pokemon", b =>
+                {
+                    b.HasOne("Entities.Trainer", "Trainer")
+                        .WithMany("Pokemons")
+                        .HasForeignKey("TrainerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Trainer");
+                });
+
+            modelBuilder.Entity("Entities.Trainer", b =>
+                {
+                    b.Navigation("Pokemons");
                 });
 #pragma warning restore 612, 618
         }

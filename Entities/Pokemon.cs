@@ -13,4 +13,7 @@ public class Pokemon
     [Required]
     public string? Name { get; set; }
     public int Level { get; set; }
+
+    public int TrainerId { get; set; }
+    public virtual Trainer? Trainer { get; set;}
 }

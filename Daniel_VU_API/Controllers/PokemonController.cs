@@ -1,8 +1,8 @@
 ﻿using Entities;
 using Microsoft.AspNetCore.Mvc;
 using Service.Contracts;
-using Services.Contracts.Requests.Pokemon;
-using Services.Contracts.Responses.Pokemon;
+using Service.Contracts.Requests.Pokemons;
+using Service.Contracts.Responses.Pokemons;
 
 namespace Daniel_VU_API.Controllers;
 
@@ -18,14 +18,14 @@ public class PokemonController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<ActionResult<PokemonResponse>> GetAll()
+    public async Task<ActionResult<PokemonFullResponse>> GetAll()
     {
         var pokemonResponses = await _pokemonService.GetAllAsync();
         return Ok(pokemonResponses);
     }
 
     [HttpGet("{id}")]
-    public async Task<ActionResult<PokemonResponse>> GetById(int id)
+    public async Task<ActionResult<PokemonFullResponse>> GetById(int id)
     {
         var pokemonResponse = await _pokemonService.GetByIdAsync(id);
         if (pokemonResponse == null)
@@ -36,7 +36,7 @@ public class PokemonController : ControllerBase
     }
 
     [HttpGet("Search/{name}")]
-    public async Task<ActionResult<PokemonResponse>> Search(string name)
+    public async Task<ActionResult<PokemonFullResponse>> Search(string name)
     {
         var pokemonResponse = await _pokemonService.GetByNameAsync(name);
         if (pokemonResponse == null)
@@ -61,7 +61,7 @@ public class PokemonController : ControllerBase
     }
 
     [HttpDelete]
-    public async Task<ActionResult<PokemonResponse>> Delete(int id)
+    public async Task<ActionResult<PokemonFullResponse>> Delete(int id)
     {
         var pokemonResponse = await _pokemonService.DeleteAsync(id);
         if (pokemonResponse == null)

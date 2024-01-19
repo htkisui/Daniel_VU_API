@@ -1,22 +1,22 @@
 ﻿using Entities;
 using Repository.Contracts;
 using Service.Contracts;
-using Services.Contracts.Mappers;
-using Services.Contracts.Requests.Pokemon;
-using Services.Contracts.Responses.Pokemon;
+using Service.Contracts.Mappers.Pokemons;
+using Service.Contracts.Requests.Pokemons;
+using Service.Contracts.Responses.Pokemons;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Services;
+namespace Service;
 public class PokemonService : IPokemonService
 {
     private readonly IPokemonRepository _pokemonRepository;
-    private readonly PokemonMapper _pokemonMapper;
+    private readonly IPokemonMapper _pokemonMapper;
 
-    public PokemonService(IPokemonRepository pokemonRepository, PokemonMapper pokemonMapper)
+    public PokemonService(IPokemonRepository pokemonRepository, IPokemonMapper pokemonMapper)
     {
         _pokemonRepository = pokemonRepository;
         _pokemonMapper = pokemonMapper;
@@ -28,24 +28,28 @@ public class PokemonService : IPokemonService
         await _pokemonRepository.AddAsync(pokemon);
     }
 
-    public async Task<Pokemon?> DeleteAsync(int id)
+    public async Task<PokemonFullResponse?> DeleteAsync(int id)
     {
-        return await _pokemonRepository.DeleteAsync(id);
+        var pokemon = await _pokemonRepository.DeleteAsync(id);
+        return _pokemonMapper.ToPokemonFullResponse(pokemon);
     }
 
-    public async Task<List<Pokemon>> GetAllAsync()
+    public async Task<List<PokemonFullResponse>> GetAllAsync()
     {
-        return await _pokemonRepository.GetAllAsync();
+        var pokemons = await _pokemonRepository.GetAllAsync();
+        return pokemons.Select(_pokemonMapper.ToPokemonFullResponse).ToList();
     }
 
-    public async Task<Pokemon?> GetByIdAsync(int id)
+    public async Task<PokemonFullResponse?> GetByIdAsync(int id)
     {
-        return await _pokemonRepository.GetByIdAsync(id);
+        var pokemon = await _pokemonRepository.GetByIdAsync(id);
+        return _pokemonMapper.ToPokemonFullResponse(pokemon);
     }
 
-    public async Task<List<Pokemon>> GetByNameAsync(string name)
+    public async Task<List<PokemonFullResponse>> GetByNameAsync(string name)
     {
-       return await _pokemonRepository.GetByNameAsync(name);
+        var pokemons = await _pokemonRepository.GetByNameAsync(name);
+        return pokemons.Select(_pokemonMapper.ToPokemonFullResponse).ToList();
     }
 
     public async Task UpdateAsync(PokemonUpdateRequest pokemonUpdateRequest)

@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Services.Contracts.Responses.Pokemon;
+namespace Service.Contracts.Responses.Pokemons;
 
 public class PokemonUpdateRequest
 {
@@ -11,4 +11,6 @@ public class PokemonUpdateRequest
 
     [Range(0, 100)]
     public int Level { get; set; }
+    public int TrainerId { get; set; }
+
 }

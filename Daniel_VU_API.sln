@@ -3,17 +3,19 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.8.34322.80
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Daniel_VU_API", "Daniel_VU_API\Daniel_VU_API.csproj", "{122A6C56-402B-43EA-B3C4-4910654BBEC5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Daniel_VU_API", "Daniel_VU_API\Daniel_VU_API.csproj", "{122A6C56-402B-43EA-B3C4-4910654BBEC5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Entities", "Entities\Entities.csproj", "{2A0439E4-5646-4AF9-9DAF-AC17A5C4A243}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Entities", "Entities\Entities.csproj", "{2A0439E4-5646-4AF9-9DAF-AC17A5C4A243}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Repositories", "Repositories\Repositories.csproj", "{2F5E17D8-FA6C-4E5B-A1BA-EC0B6FABCACE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Repositories", "Repositories\Repositories.csproj", "{2F5E17D8-FA6C-4E5B-A1BA-EC0B6FABCACE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Repository.Contracts", "Repository.Contracts\Repository.Contracts.csproj", "{7B55468E-6373-46ED-B603-E79CF1092270}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Repository.Contracts", "Repository.Contracts\Repository.Contracts.csproj", "{7B55468E-6373-46ED-B603-E79CF1092270}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Services", "Services\Services.csproj", "{314CCF16-9489-4527-B557-30B550F52D57}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Services", "Services\Services.csproj", "{314CCF16-9489-4527-B557-30B550F52D57}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Service.Contracts", "Service.Contracts\Service.Contracts.csproj", "{C2805AEC-5E2A-475E-BE5E-7C57DF517EB7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Service.Contracts", "Service.Contracts\Service.Contracts.csproj", "{C2805AEC-5E2A-475E-BE5E-7C57DF517EB7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServicesTests", "ServicesTests\ServicesTests.csproj", "{6C7C43D4-E0AE-43CF-8D87-E30DC514EF89}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +47,10 @@ Global
 		{C2805AEC-5E2A-475E-BE5E-7C57DF517EB7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C2805AEC-5E2A-475E-BE5E-7C57DF517EB7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C2805AEC-5E2A-475E-BE5E-7C57DF517EB7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6C7C43D4-E0AE-43CF-8D87-E30DC514EF89}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6C7C43D4-E0AE-43CF-8D87-E30DC514EF89}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6C7C43D4-E0AE-43CF-8D87-E30DC514EF89}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6C7C43D4-E0AE-43CF-8D87-E30DC514EF89}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
