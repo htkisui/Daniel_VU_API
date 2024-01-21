@@ -18,7 +18,10 @@ public partial class PokemonMapper : IPokemonMapper
     {
         var trainerMapper = new TrainerMapper();
         var dto = CustomToPokemonFullResponse(pokemon);
-        dto.Trainer = trainerMapper.ToTrainerSimpleResponse(pokemon.Trainer);
+        if (pokemon.Trainer != null)
+        {
+            dto.Trainer = trainerMapper.ToTrainerSimpleResponse(pokemon.Trainer);
+        }
         return dto;
     }
 

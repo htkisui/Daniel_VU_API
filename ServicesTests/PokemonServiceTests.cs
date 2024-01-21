@@ -1,6 +1,4 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Service;
-using ServicesTests.Dummies;
 using ServicesTests.Mocks;
 using System;
 using System.Collections.Generic;
@@ -14,15 +12,15 @@ namespace Service.Tests;
 public class PokemonServiceTests
 {
     [TestMethod()]
-    public async void GetAllAsyncTest()
+    public async Task GetAllAsyncTest()
     {
-        Assert.Fail();
-        var pokemonMapper = new PokemonMapperDummy();
+        var pokemonMapper = new PokemonMapperMock();
         var pokemonRepository = new PokemonRepositoryMock();
         var pokemonService = new PokemonService(pokemonRepository, pokemonMapper);
         var resultExpected = 1;
 
         var pokemons = await pokemonService.GetAllAsync();
-        Assert.AreEqual(resultExpected, pokemons.Count());
+
+        Assert.AreEqual(resultExpected, pokemons.Count);
     }
 }

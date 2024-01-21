@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace ServicesTests.Mocks;
 public class PokemonRepositoryMock : IPokemonRepository
 {
-    public Task AddAsync(Pokemon pokemon)
+    public Task CreateAsync(Pokemon pokemon)
     {
         throw new NotImplementedException();
     }

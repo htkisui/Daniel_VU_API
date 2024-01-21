@@ -7,10 +7,15 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Repositories;
-public class ApplicationContext : DbContext
+public class ApplicationDbContext : DbContext
 {
+    public ApplicationDbContext(DbContextOptions options) : base(options)
+    {
+    }
+
     public DbSet<Pokemon> Pokemons { get; set; }
     public DbSet<Trainer> Trainers { get; set; }
+
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         if (!optionsBuilder.IsConfigured)

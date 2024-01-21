@@ -8,8 +8,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ServicesTests.Dummies;
-public class PokemonMapperDummy : IPokemonMapper
+namespace ServicesTests.Mocks;
+public class PokemonMapperMock : IPokemonMapper
 {
     public Pokemon ToPokemon(PokemonAddRequest pokemonAddRequest)
     {
@@ -23,7 +23,7 @@ public class PokemonMapperDummy : IPokemonMapper
 
     public PokemonFullResponse ToPokemonFullResponse(Pokemon pokemon)
     {
-        throw new NotImplementedException();
+        return new PokemonFullResponse();
     }
 
     public PokemonSimpleResponse ToPokemonSimpleResponse(Pokemon pokemon)

@@ -1,6 +1,7 @@
 ﻿using Entities;
 using Microsoft.EntityFrameworkCore;
 using Repository.Contracts;
+using Repository.Contracts.Exceptions.Trainers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,27 +11,29 @@ using System.Threading.Tasks;
 namespace Repositories;
 public class TrainerRepository : ITrainerRepository
 {
-    private readonly ApplicationContext _context;
+    private readonly ApplicationDbContext _context;
 
-    public TrainerRepository(ApplicationContext context)
+    public TrainerRepository(ApplicationDbContext context)
     {
         _context = context;
     }
 
-    public async Task AddAsync(Trainer trainer)
+    public async Task CreateAsync(Trainer trainer)
     {
         await _context.Trainers.AddAsync(trainer);
         await _context.SaveChangesAsync();
     }
 
-    public async Task<Trainer?> DeleteAsync(int id)
+    public async Task<Trainer> DeleteAsync(int id)
     {
-        var trainer = _context.Trainers.FirstOrDefault(p => p.Id == id);
-        if (trainer != null)
+        var trainer = await _context.Trainers.FindAsync(id);
+        if (trainer == null)
         {
-            _context.Trainers.Remove(trainer);
-            await _context.SaveChangesAsync();
+            throw new TrainerNotFoundException();
         }
+
+        _context.Trainers.Remove(trainer);
+        await _context.SaveChangesAsync();
         return trainer;
     }
 
@@ -39,9 +42,15 @@ public class TrainerRepository : ITrainerRepository
         return await _context.Trainers.Include(t => t.Pokemons).ToListAsync();
     }
 
-    public async Task<Trainer?> GetByIdAsync(int id)
+    public async Task<Trainer> GetByIdAsync(int id)
     {
-        return await _context.Trainers.Include(t => t.Pokemons).FirstOrDefaultAsync(t => t.Id == id);
+        var trainer = await _context.Trainers.Include(t => t.Pokemons).FirstOrDefaultAsync(t => t.Id == id);
+        if (trainer == null)
+        {
+            throw new TrainerNotFoundException();
+        }
+
+        return trainer;
     }
 
     public async Task<List<Trainer>> GetByNameAsync(string name)
@@ -51,11 +60,13 @@ public class TrainerRepository : ITrainerRepository
 
     public async Task UpdateAsync(Trainer trainer)
     {
-        var trainerToUpdate = _context.Trainers.FirstOrDefault(t => t.Id == trainer.Id);
-        if (trainerToUpdate != null)
+        var trainerToUpdate = await _context.Trainers.FindAsync(trainer.Id);
+        if (trainerToUpdate == null)
         {
-            trainerToUpdate.Name = trainer.Name;
-            await _context.SaveChangesAsync();
+            throw new TrainerNotFoundException();
         }
+
+        trainerToUpdate.Name = trainer.Name;
+        await _context.SaveChangesAsync();
     }
 }

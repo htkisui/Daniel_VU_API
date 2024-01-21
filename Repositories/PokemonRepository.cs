@@ -1,6 +1,8 @@
 ﻿using Entities;
 using Microsoft.EntityFrameworkCore;
 using Repository.Contracts;
+using Repository.Contracts.Exceptions.Pokemons;
+using Repository.Contracts.Exceptions.Trainers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,27 +12,35 @@ using System.Threading.Tasks;
 namespace Repositories;
 public class PokemonRepository : IPokemonRepository
 {
-    private readonly ApplicationContext _context;
+    private readonly ApplicationDbContext _context;
 
-    public PokemonRepository(ApplicationContext context)
+    public PokemonRepository(ApplicationDbContext context)
     {
         _context = context;
     }
 
-    public async Task AddAsync(Pokemon pokemon)
+    public async Task CreateAsync(Pokemon pokemon)
     {
+        var trainer = await _context.Trainers.FindAsync(pokemon.TrainerId);
+        if (trainer == null)
+        {
+            throw new TrainerNotFoundException();
+        }
+
         await _context.Pokemons.AddAsync(pokemon);
         await _context.SaveChangesAsync();
     }
 
-    public async Task<Pokemon?> DeleteAsync(int id)
+    public async Task<Pokemon> DeleteAsync(int id)
     {
-        var pokemon = _context.Pokemons.FirstOrDefault(p => p.Id == id);
-        if (pokemon != null)
+        var pokemon = await _context.Pokemons.FindAsync(id);
+        if (pokemon == null)
         {
-            _context.Pokemons.Remove(pokemon);
-            await _context.SaveChangesAsync();
+            throw new PokemonNotFoundException();
         }
+
+        _context.Pokemons.Remove(pokemon);
+        await _context.SaveChangesAsync();
         return pokemon;
     }
 
@@ -39,9 +49,14 @@ public class PokemonRepository : IPokemonRepository
         return await _context.Pokemons.Include(p => p.Trainer).ToListAsync();
     }
 
-    public async Task<Pokemon?> GetByIdAsync(int id)
+    public async Task<Pokemon> GetByIdAsync(int id)
     {
-        return await _context.Pokemons.Include(p => p.Trainer).FirstOrDefaultAsync(p => p.Id == id);
+        var pokemon = await _context.Pokemons.Include(p => p.Trainer).FirstOrDefaultAsync(p => p.Id == id);
+        if (pokemon == null)
+        {
+            throw new PokemonNotFoundException();
+        }
+        return pokemon;
     }
 
     public async Task<List<Pokemon>> GetByNameAsync(string name)
@@ -51,12 +66,14 @@ public class PokemonRepository : IPokemonRepository
 
     public async Task UpdateAsync(Pokemon pokemon)
     {
-        var pokemonToUpdate = _context.Pokemons.FirstOrDefault(p => p.Id == pokemon.Id);
-        if (pokemonToUpdate != null)
+        var pokemonToUpdate = await _context.Pokemons.FindAsync(pokemon.Id);
+        if (pokemonToUpdate == null)
         {
-            pokemonToUpdate.Name = pokemon.Name;
-            pokemonToUpdate.Level = pokemon.Level;
-            await _context.SaveChangesAsync();
+            throw new PokemonNotFoundException();
         }
+
+        pokemonToUpdate.Name = pokemon.Name;
+        pokemonToUpdate.Level = pokemon.Level;
+        await _context.SaveChangesAsync();
     }
 }

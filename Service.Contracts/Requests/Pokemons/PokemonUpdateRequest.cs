@@ -11,6 +11,5 @@ public class PokemonUpdateRequest
 
     [Range(0, 100)]
     public int Level { get; set; }
-    public int TrainerId { get; set; }
 
 }

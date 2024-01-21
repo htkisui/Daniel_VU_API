@@ -10,8 +10,8 @@ using Repositories;
 
 namespace Repositories.Migrations
 {
-    [DbContext(typeof(ApplicationContext))]
-    [Migration("20240119095229_init")]
+    [DbContext(typeof(ApplicationDbContext))]
+    [Migration("20240121104438_init")]
     partial class init
     {
         /// <inheritdoc />

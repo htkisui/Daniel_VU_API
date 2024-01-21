@@ -1,16 +1,11 @@
-﻿using Entities;
-using Repository.Contracts;
+﻿using Repository.Contracts;
+using Repository.Contracts.Exceptions.Trainers;
 using Service.Contracts;
 using Service.Contracts.Mappers.Trainers;
 using Service.Contracts.Requests.Trainers;
 using Service.Contracts.Responses.Trainers;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Service;
+namespace Services;
 public class TrainerService : ITrainerService
 {
     private readonly ITrainerRepository _trainerRepository;
@@ -22,39 +17,60 @@ public class TrainerService : ITrainerService
         _trainerMapper = trainerMapper;
     }
 
-    public async Task AddAsync(TrainerAddRequest trainerAddRequest)
+    public async Task CreateAsync(TrainerAddRequest trainerAddRequest)
     {
         var trainer = _trainerMapper.ToTrainer(trainerAddRequest);
-        await _trainerRepository.AddAsync(trainer);
+        await _trainerRepository.CreateAsync(trainer);
     }
 
     public async Task<TrainerFullResponse?> DeleteAsync(int id)
     {
-        var trainer = await _trainerRepository.DeleteAsync(id);
-        return _trainerMapper.ToTrainerFullResponse(trainer);
+        try
+        {
+            var trainer = await _trainerRepository.DeleteAsync(id);
+            return _trainerMapper.ToTrainerFullResponse(trainer);
+        }
+        catch (TrainerNotFoundException e)
+        {
+            throw new Exception(e.Message);
+        }
     }
 
     public async Task<List<TrainerFullResponse>> GetAllAsync()
     {
-        var trainers =  await _trainerRepository.GetAllAsync();
+        var trainers = await _trainerRepository.GetAllAsync();
         return trainers.Select(_trainerMapper.ToTrainerFullResponse).ToList();
     }
 
     public async Task<TrainerFullResponse?> GetByIdAsync(int id)
     {
-        var trainer =  await _trainerRepository.GetByIdAsync(id);
-        return _trainerMapper.ToTrainerFullResponse(trainer);
+        try
+        {
+            var trainer = await _trainerRepository.GetByIdAsync(id);
+            return _trainerMapper.ToTrainerFullResponse(trainer);
+        }
+        catch (TrainerNotFoundException e)
+        {
+            throw new Exception(e.Message);
+        }
     }
 
     public async Task<List<TrainerFullResponse>> GetByNameAsync(string name)
     {
-        var trainers =  await _trainerRepository.GetByNameAsync(name);
+        var trainers = await _trainerRepository.GetByNameAsync(name);
         return trainers.Select(_trainerMapper.ToTrainerFullResponse).ToList();
     }
 
     public async Task UpdateAsync(TrainerUpdateRequest trainerUpdateRequest)
     {
-        var trainer = _trainerMapper.ToTrainer(trainerUpdateRequest);
-        await _trainerRepository.UpdateAsync(trainer);
+        try
+        {
+            var trainer = _trainerMapper.ToTrainer(trainerUpdateRequest);
+            await _trainerRepository.UpdateAsync(trainer);
+        }
+        catch (TrainerNotFoundException e)
+        {
+            throw new Exception(e.Message);
+        }
     }
 }
